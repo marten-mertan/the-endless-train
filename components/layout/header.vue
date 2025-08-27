@@ -10,7 +10,7 @@
           href="/"
           :class="$style.link"
         >
-          TITLE
+          The Endless Train
         </NuxtLink>
       </div>
     </div>

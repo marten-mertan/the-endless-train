@@ -1,17 +1,18 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
+    '@pinia/nuxt',
   ],
 
   devtools: { enabled: true },
 
   app: {
-    baseURL: '/nuxt3-template/',
+    baseURL: '/the-endless-train/',
     head: {
       htmlAttrs: {
         lang: 'en',
       },
-      title: 'Nuxt3 Template',
+      title: 'The Endless Train',
 
       /**
        * Метатеги, фавиконки и т.п
@@ -27,11 +28,11 @@ export default defineNuxtConfig({
         },
         {
           name: 'title',
-          content: 'Nuxt3 Template',
+          content: 'The Endless Train',
         },
         {
           name: 'description',
-          content: 'Nuxt3 Template description',
+          content: 'The Endless Train description',
         },
         {
           name: 'author',
@@ -48,12 +49,12 @@ export default defineNuxtConfig({
       ],
       link: [
         /* Favicons */
-        { rel: 'icon', type: 'image/x-icon', href: '/nuxt3-template/favicons/favicon.ico' },
-        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/nuxt3-template/favicons/favicon-32x32.png' },
-        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/nuxt3-template/favicons/favicon-16x16.png' },
-        { rel: 'apple-touch-icon', sizes: '180x180', href: '/nuxt3-template/favicons/apple-touch-icon.png' },
-        { rel: 'manifest', href: '/nuxt3-template/favicons/site.webmanifest' },
-        { rel: 'mask-icon', href: '/nuxt3-template/favicons/safari-pinned-tab.svg', color: '#e7609e' },
+        { rel: 'icon', type: 'image/x-icon', href: '/the-endless-train/favicons/favicon.ico' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/the-endless-train/favicons/favicon-32x32.png' },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/the-endless-train/favicons/favicon-16x16.png' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/the-endless-train/favicons/apple-touch-icon.png' },
+        { rel: 'manifest', href: '/the-endless-train/favicons/site.webmanifest' },
+        { rel: 'mask-icon', href: '/the-endless-train/favicons/safari-pinned-tab.svg', color: '#e7609e' },
       ],
     },
   },

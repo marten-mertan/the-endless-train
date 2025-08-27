@@ -4,19 +4,14 @@
 
 <template>
   <div :class="[$style.IndexPage, 'container']">
-    <h1 class="h1">
-      Index Page
-    </h1>
-    <p class="text">
-      Content goes here
-    </p>
+    <GameField />
   </div>
 </template>
 
 <style lang="scss" module>
   .IndexPage {
-    padding-top: 10rem;
-    padding-bottom: 10rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
     text-align: center;
   }
 </style>
