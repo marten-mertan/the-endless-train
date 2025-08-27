@@ -1,0 +1,106 @@
+@use 'shared.scss';
+@use 'common/fonts';
+@use 'common/reset';
+@use 'common/text';
+@use 'common/transitions';
+
+html {
+    font-size: .52083333vw;
+
+    @include respond-to(desktop) {
+        font-size: 10px;
+    }
+
+    @include respond-to(laptop) {
+        font-size: .7246376811594vw;
+    }
+
+    @include respond-to(tablet) {
+        font-size: 10px;
+    }
+}
+
+body {
+    font-family: $font-family;
+    font-size: $font-size;
+    color: $body-color;
+    background-color: $body-bg;
+}
+
+.page {
+	display: flex;
+	padding-top: 5rem;
+	padding-bottom: 5rem;
+
+    @include respond-to(mobile) {
+        flex-direction: column;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+}
+
+.aside {
+    padding-right: 4.5rem;
+    width: 30rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    @include respond-to(tablet) {
+        padding-right: 3rem;
+    }
+
+    @include respond-to(mobile) {
+        width: 100%;
+        padding-right: 0;
+        padding-bottom: 2.4rem;
+        margin-bottom: 2.4rem;
+        border-bottom: .1rem solid $gray-light;
+    }
+}
+
+.content {
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    &-table {
+        display: flex;
+
+        @include respond-to(tablet) {
+            flex-direction: column;
+        }
+
+        &-col {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+
+            @include respond-to(tablet) {
+                width: 100%;
+            }
+
+            &:not(:last-child) {
+                margin-right: 3rem;
+
+                @include respond-to(tablet) {
+                    margin-right: 0;
+                    margin-bottom: 2.4rem;
+                }
+            }
+        }
+    }
+}
+
+.container {
+    width: 100%;
+    flex-grow: 1;
+    max-width: $container-w;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: $padding;
+    padding-right: $padding;
+
+    @include respond-to(mobile) {
+        padding-left: $padding-m;
+        padding-right: $padding-m;
+    }
+}

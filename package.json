@@ -1,0 +1,30 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "deploy": "gh-pages --dotfiles -d dist"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "^1.2.0",
+    "eslint": "^9.22.0",
+    "normalize.css": "^8.0.1",
+    "nuxt": "^3.16.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "sass": "^1.85.1",
+    "typescript": "^5.8.2",
+    "vite-plugin-eslint2": "^5.0.3",
+    "vue-tsc": "^2.2.8"
+  }
+}

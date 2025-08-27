@@ -1,0 +1,25 @@
+@use "sass:map";
+
+/* Breakpoints */
+$breakpoints: (
+    mobile: 767px,
+    tablet: 1023px,
+    laptop: 1380px,
+    desktop: 1920px,
+    large-desktop: 99999px,
+);
+
+/* Mixins */
+@mixin respond-to($name) {
+    $max: map.get($breakpoints, $name);
+
+    @if $max {
+        @media only screen and (max-width: $max) {
+            @content;
+        }
+    }
+
+    @else {
+        @content;
+    }
+}
