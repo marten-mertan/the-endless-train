@@ -1,21 +1,21 @@
-export type GameStatus = 'running' | 'gameover'
+export type TGameStatus = 'running' | 'gameover'
 
-export interface GameConfig {
+export interface IGameConfig {
   ROWS: number
   COLS: number
   CHARACTER_IDS: string // ID персонажей через пробел
   SOLUTION_RANDOMNESS: number // от 0 до 1, насколько часто будут добавляться условия для персонажей (0 - никогда, 1 - всегда)
 }
 
-export interface GameState {
-  seats: Seat[]
-  characters: Character[]
+export interface IGameState {
+  seats: ISeat[]
+  characters: ICharacter[]
   lastFailedSeatIds: Set<string>
   lastFailedMsgs: Set<string>
-  status: GameStatus
+  status: TGameStatus
 }
 
-export interface Seat {
+export interface ISeat {
   id: string
   row: number
   col: number
@@ -24,12 +24,12 @@ export interface Seat {
   neighbors: string[]
 }
 
-export interface Character {
+export interface ICharacter {
   id: string
-  conditions: Condition[]
+  conditions: ICondition[]
 }
 
-export interface Condition {
+export interface ICondition {
   type: 'near' | 'windowLeft' | 'windowRight' | 'front' | 'back' | 'facingForward' | 'facingBackward'
   nearTarget?: string // ID персонажа, если type === 'near'
 }

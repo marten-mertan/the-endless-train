@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
-import type { GameConfig, GameState, Seat, Character, Condition } from '~/types/game.ts'
+import type { IGameConfig, IGameState, ISeat, ICharacter, ICondition } from '~/types/game.ts'
 
 export const useGameStore = defineStore('gameStore', () => {
-  const CONFIG: GameConfig = {
+  const CONFIG: IGameConfig = {
     ROWS: 6,
     COLS: 4,
     CHARACTER_IDS: 'A B C D E F G H I J',
     SOLUTION_RANDOMNESS: 1,
   }
-  const state = ref<GameState>({
+  const state = ref<IGameState>({
     seats: [],
     characters: [],
     lastFailedSeatIds: new Set(),
@@ -17,8 +17,8 @@ export const useGameStore = defineStore('gameStore', () => {
   })
 
   // Получаем место в поезде по ID
-  function seatById(id: string): Seat | undefined {
-    return (state.value.seats ?? []).find((seat: Seat) => seat.id === id)
+  function seatById(id: string): ISeat | undefined {
+    return (state.value.seats ?? []).find((seat: ISeat) => seat.id === id)
   }
 
   // Генерируем места в поезде
@@ -41,10 +41,10 @@ export const useGameStore = defineStore('gameStore', () => {
 
     // После того как сгенерировали места, вычисляем соседей
     const neighborMap = new Map()
-    state.value.seats.forEach((s: Seat) => neighborMap.set(s.id, new Set()))
+    state.value.seats.forEach((s: ISeat) => neighborMap.set(s.id, new Set()))
 
-    state.value.seats.forEach((a: Seat) => {
-      state.value.seats.forEach((b: Seat) => {
+    state.value.seats.forEach((a: ISeat) => {
+      state.value.seats.forEach((b: ISeat) => {
         if (a.id === b.id) return
 
         const sameRow = a.row === b.row
@@ -69,7 +69,7 @@ export const useGameStore = defineStore('gameStore', () => {
     })
 
     // Присваиваем соседей местам
-    state.value.seats.forEach((s: Seat) => s.neighbors = Array.from(neighborMap.get(s.id)))
+    state.value.seats.forEach((s: ISeat) => s.neighbors = Array.from(neighborMap.get(s.id)))
   }
 
   // Генерируем число персонажей исходя из числа мест
@@ -97,9 +97,9 @@ export const useGameStore = defineStore('gameStore', () => {
     })
 
     // Генерируем условия для персонажей на основе их мест в решении
-    state.value.characters.forEach((ch: Character) => {
+    state.value.characters.forEach((ch: ICharacter) => {
       const sId: string = solution.get(ch.id)
-      const s: Seat | undefined = seatById(sId)
+      const s: ISeat | undefined = seatById(sId)
       if (!s) return
 
       let added = false
@@ -161,13 +161,13 @@ export const useGameStore = defineStore('gameStore', () => {
   function checkSolution() {
     state.value.lastFailedSeatIds.clear()
     state.value.lastFailedMsgs.clear()
-    state.value.characters.forEach((ch: Character) => {
+    state.value.characters.forEach((ch: ICharacter) => {
       const s = state.value.seats.find(x => x.occupiedBy === ch.id)
       if (!s) {
         state.value.lastFailedMsgs.add(`${ch.id}: ждет посадку`)
         return
       }
-      ch.conditions.forEach((cond: Condition) => {
+      ch.conditions.forEach((cond: ICondition) => {
         if (cond.type === 'near') {
           const tSeat = state.value.seats.find(x => x.occupiedBy === cond.nearTarget)
           if (!tSeat || !s.neighbors.includes(tSeat.id)) {
@@ -218,18 +218,18 @@ export const useGameStore = defineStore('gameStore', () => {
 
   function assignCharacterToSeat(characterId: string, seatId: string) {
     // Снимаем персонажа с предыдущего места
-    state.value.seats.forEach((s: Seat) => {
+    state.value.seats.forEach((s: ISeat) => {
       if (s.occupiedBy === characterId) s.occupiedBy = null
     })
     // Назначаем на новое место
-    const seat = state.value.seats.find((s: Seat) => s.id === seatId)
+    const seat = state.value.seats.find((s: ISeat) => s.id === seatId)
     if (seat) seat.occupiedBy = characterId
     checkSolution()
   }
 
   function assignCharacterToPlatform(characterId: string) {
     // Снимаем персонажа с предыдущего места
-    state.value.seats.forEach((s: Seat) => {
+    state.value.seats.forEach((s: ISeat) => {
       if (s.occupiedBy === characterId) s.occupiedBy = null
     })
     checkSolution()

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Character } from '~/types/game.ts'
+import type { ICharacter } from '~/types/game.ts'
 
 defineProps<{
-  character: Character
+  character: ICharacter
 }>()
 </script>
 

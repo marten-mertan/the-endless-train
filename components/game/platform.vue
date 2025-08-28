@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { Character } from '~/types/game.ts'
+import type { ICharacter } from '~/types/game.ts'
 
 const gameStore = useGameStore()
 
 const charactersOnPlatform = computed(() =>
-  gameStore.state.characters.filter((ch: Character) => {
+  gameStore.state.characters.filter((ch: ICharacter) => {
     return !gameStore.state.seats.find(s => s.occupiedBy === ch.id)
   }),
 )
