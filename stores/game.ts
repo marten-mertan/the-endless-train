@@ -216,5 +216,24 @@ export const useGameStore = defineStore('gameStore', () => {
     checkSolution()
   }
 
-  return { state, initGame }
+  function assignCharacterToSeat(characterId: string, seatId: string) {
+    // Снимаем персонажа с предыдущего места
+    state.value.seats.forEach((s: Seat) => {
+      if (s.occupiedBy === characterId) s.occupiedBy = null
+    })
+    // Назначаем на новое место
+    const seat = state.value.seats.find((s: Seat) => s.id === seatId)
+    if (seat) seat.occupiedBy = characterId
+    checkSolution()
+  }
+
+  function assignCharacterToPlatform(characterId: string) {
+    // Снимаем персонажа с предыдущего места
+    state.value.seats.forEach((s: Seat) => {
+      if (s.occupiedBy === characterId) s.occupiedBy = null
+    })
+    checkSolution()
+  }
+
+  return { state, initGame, assignCharacterToSeat, assignCharacterToPlatform }
 })
