@@ -2,8 +2,7 @@
 const gameStore = useGameStore()
 
 onMounted(() => {
-  gameStore.initSeats()
-  gameStore.initCharacters()
+  gameStore.initGame()
 })
 </script>
 

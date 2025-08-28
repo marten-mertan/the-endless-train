@@ -1,12 +1,17 @@
 export type GameStatus = 'running' | 'gameover'
 
+export interface GameConfig {
+  ROWS: number
+  COLS: number
+  CHARACTER_IDS: string // ID персонажей через пробел
+  SOLUTION_RANDOMNESS: number // от 0 до 1, насколько часто будут добавляться условия для персонажей (0 - никогда, 1 - всегда)
+}
+
 export interface GameState {
-  rows: number
-  cols: number
-  characterIDs: string // ID персонажей через пробел
   seats: Seat[]
   characters: Character[]
   lastFailedSeatIds: Set<string>
+  lastFailedMsgs: Set<string>
   status: GameStatus
 }
 
@@ -15,7 +20,7 @@ export interface Seat {
   row: number
   col: number
   direction: 'forward' | 'backward'
-  occupiedBy: Character | null
+  occupiedBy: string | null
   neighbors: string[]
 }
 
@@ -26,5 +31,5 @@ export interface Character {
 
 export interface Condition {
   type: 'near' | 'windowLeft' | 'windowRight' | 'front' | 'back' | 'facingForward' | 'facingBackward'
-  nearTarget?: string[]
+  nearTarget?: string // ID персонажа, если type === 'near'
 }

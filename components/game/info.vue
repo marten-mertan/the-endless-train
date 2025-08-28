@@ -1,10 +1,16 @@
 <script setup lang="ts">
-
+const gameStore = useGameStore()
 </script>
 
 <template>
   <div :class="$style.GameInfo">
-    INFO
+    <div
+      v-for="msg in gameStore.state.lastFailedMsgs"
+      :key="msg"
+      :class="$style.character"
+    >
+      {{ msg }}
+    </div>
   </div>
 </template>
 
