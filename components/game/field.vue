@@ -23,7 +23,7 @@ onMounted(() => {
 <style lang="scss" module>
   .GameField {
     display: grid;
-    grid-template-columns: 30rem 60rem 30rem; // убрать жесткие размеры, переписать с исп $container-w
+    grid-template-columns: 30rem 48rem 42rem; // убрать жесткие размеры, переписать с исп $container-w
     gap: calc(11.2rem / 2); // убрать жесткие размеры, переписать с исп $container-w
     border: .1rem solid $black;
     background-color: $white;
@@ -34,7 +34,8 @@ onMounted(() => {
   }
 
   .train {
-    border: .1rem solid $gray;
+    width: 48rem;
+    height: 48rem;
   }
 
   .platform {

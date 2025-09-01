@@ -1,54 +1,71 @@
 <script setup lang="ts">
+import type { ISeat } from '~/types/game.ts'
+
 const gameStore = useGameStore()
+const rows = computed(() => gameStore.CONFIG.ROWS)
+const cols = computed(() => gameStore.CONFIG.COLS)
+const seatsPerSide = computed(() => Math.floor(cols.value / 2))
 
-function onDragStart(e: DragEvent, occupiedBy: string | null) {
-  if (!occupiedBy) return
-  e.dataTransfer?.setData('characterId', occupiedBy)
-}
-
-function onDragOver(e: DragEvent) {
-  e.preventDefault()
-}
-
-function onDrop(e: DragEvent, seatId: string) {
-  e.preventDefault()
-  const characterId = e.dataTransfer?.getData('characterId')
-  if (characterId) {
-    gameStore.assignCharacterToSeat(characterId, seatId)
-  }
+function getSeat(row: number, col: number) {
+  return gameStore.state.seats.find(s => s.row === row && s.col === col) as ISeat
 }
 </script>
 
 <template>
   <div :class="$style.GameTrain">
     <div
-      v-for="seat in gameStore.state.seats"
-      :key="seat.id"
-      :class="$style.seat"
-      :draggable="Boolean(seat.occupiedBy) ? 'true' : 'false'"
-      @dragstart="onDragStart($event, seat.occupiedBy)"
-      @dragover="onDragOver"
-      @drop="(e) => onDrop(e, seat.id)"
+      v-if="gameStore.state.seats.length"
+      :class="$style.trainArea"
+      :style="{
+        '--rows': rows,
+        '--cols': cols,
+        '--seats-per-side': seatsPerSide,
+      }"
     >
-      {{ seat.id }} ({{ seat.row }},{{ seat.col }}) [{{ seat.direction }}] [{{ seat.occupiedBy }}]
+      <template
+        v-for="row in rows"
+        :key="row"
+      >
+        <template
+          v-for="col in seatsPerSide"
+          :key="`left-${row}-${col}`"
+        >
+          <GameSeat
+            :seat="getSeat(row - 1, col - 1)"
+            :is-right="!Boolean(col % 2)"
+          />
+        </template>
+        <GameAisle />
+        <template
+          v-for="col in seatsPerSide"
+          :key="`right-${row}-${col}`"
+        >
+          <GameSeat
+            :seat="getSeat(row - 1, col - 1 + seatsPerSide)"
+            :is-right="!Boolean(col % 2)"
+          />
+        </template>
+      </template>
     </div>
   </div>
 </template>
 
 <style lang="scss" module>
   .GameTrain {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    gap: .4rem;
-    padding: .8rem;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-image: url('~/public/img/sTrain.png');
+    background-size: 100% 100%;
   }
 
-  .seat {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: .1rem solid $gray;
-    padding: .8rem;
-    user-select: none;
+  .trainArea {
+    display: grid;
+    grid-template-columns: repeat(var(--seats-per-side), 7.8rem) 8.4rem repeat(var(--seats-per-side), 7.8rem);
+    grid-template-rows: repeat(var(--rows), 10rem);
+    row-gap: 2rem;
+    width: 100%;
+    height: 100%;
+    padding: 9.2rem 4.4rem 5.2rem 4rem;
   }
 </style>

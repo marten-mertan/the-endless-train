@@ -9,10 +9,6 @@ const charactersOnPlatform = computed(() =>
   }),
 )
 
-function onDragStart(e: DragEvent, characterId: string) {
-  e.dataTransfer?.setData('characterId', characterId)
-}
-
 function onDragOver(e: DragEvent) {
   e.preventDefault()
 }
@@ -37,16 +33,17 @@ function onDrop(e: DragEvent) {
       :key="character.id"
       :character="character"
       draggable="true"
-      @dragstart="onDragStart($event, character.id)"
     />
   </div>
 </template>
 
 <style lang="scss" module>
   .GamePlatform {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
+    display: flex;
+    flex-wrap: wrap;
     gap: .4rem;
     padding: .8rem;
+    width: 100%;
+    height: 100%;
   }
 </style>

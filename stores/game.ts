@@ -3,7 +3,7 @@ import type { IGameConfig, IGameState, ISeat, ICharacter, ICondition } from '~/t
 
 export const useGameStore = defineStore('gameStore', () => {
   const CONFIG: IGameConfig = {
-    ROWS: 6,
+    ROWS: 3,
     COLS: 4,
     CHARACTER_IDS: 'A B C D E F G H I J',
     SOLUTION_RANDOMNESS: 1,
@@ -17,8 +17,12 @@ export const useGameStore = defineStore('gameStore', () => {
   })
 
   // Получаем место в поезде по ID
-  function seatById(id: string): ISeat | undefined {
+  function getSeatById(id: string): ISeat | undefined {
     return (state.value.seats ?? []).find((seat: ISeat) => seat.id === id)
+  }
+
+  function getCharacterById(id: string): ICharacter | undefined {
+    return (state.value.characters ?? []).find((ch: ICharacter) => ch.id === id)
   }
 
   // Генерируем места в поезде
@@ -99,7 +103,7 @@ export const useGameStore = defineStore('gameStore', () => {
     // Генерируем условия для персонажей на основе их мест в решении
     state.value.characters.forEach((ch: ICharacter) => {
       const sId: string = solution.get(ch.id)
-      const s: ISeat | undefined = seatById(sId)
+      const s: ISeat | undefined = getSeatById(sId)
       if (!s) return
 
       let added = false
@@ -235,5 +239,12 @@ export const useGameStore = defineStore('gameStore', () => {
     checkSolution()
   }
 
-  return { state, initGame, assignCharacterToSeat, assignCharacterToPlatform }
+  return {
+    CONFIG,
+    state,
+    initGame,
+    getCharacterById,
+    assignCharacterToSeat,
+    assignCharacterToPlatform,
+  }
 })
